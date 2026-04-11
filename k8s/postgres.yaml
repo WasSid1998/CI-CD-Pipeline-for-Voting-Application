@@ -24,7 +24,7 @@ spec:
               key: POSTGRES_PASSWORD
         ports:
         - containerPort: 22
-----------------------------------
+________________________________________
 
 apiVersion: v1
 kind: Service
