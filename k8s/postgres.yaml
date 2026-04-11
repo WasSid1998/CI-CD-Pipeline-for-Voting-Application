@@ -15,25 +15,27 @@ spec:
     spec:
       containers:
       - name: postgres
-        image: postgres
+        image: postgres:15
+        ports:
+        - containerPort: 5432
         env:
         - name: POSTGRES_PASSWORD
           valueFrom:
             secretKeyRef:
               name: postgres-secret
               key: POSTGRES_PASSWORD
-        ports:
-        - containerPort: 22
-________________________________________
-
+        - name: POSTGRES_DB
+          value: votes
+---
 apiVersion: v1
 kind: Service
 metadata:
- name: db
- namespace: voting-app
+  name: db
+  namespace: voting-app
 spec:
   selector:
     app: db
   ports:
-  - port: 5432
+    - port: 5432
+      targetPort: 5432
 

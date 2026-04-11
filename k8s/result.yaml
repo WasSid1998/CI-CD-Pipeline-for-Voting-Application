@@ -15,15 +15,17 @@ spec:
     spec:
       containers:
       - name: result
-        image: 13.63.130.160:5000/vote
+        image: 13.63.130.160:5000/result:latest
         ports:
         - containerPort: 80
         env:
         - name: DB_HOST
           value: db
-
-________________________________________________
-
+        - name: DB_PORT
+          value: "5432"
+        - name: DB_NAME
+          value: votes
+---
 apiVersion: v1
 kind: Service
 metadata:
@@ -33,4 +35,6 @@ spec:
   selector:
     app: result
   ports:
-   - port: 80
+    - port: 80
+      targetPort: 80
+  type: ClusterIP

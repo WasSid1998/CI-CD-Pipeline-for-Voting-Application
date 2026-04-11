@@ -17,10 +17,9 @@ spec:
     spec:
       containers:
       - name: vote
-        image: 13.63.160.38:5000/vote
+        image: 13.63.130.160:5000/vote:latest
         ports:
         - containerPort: 80
         env:
         - name: REDIS_HOST
-          value: redis
-
+          value: redis.voting-app.svc.cluster.local

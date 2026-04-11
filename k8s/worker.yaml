@@ -15,11 +15,11 @@ spec:
     spec:
       containers:
       - name: worker
-        image: 13.63.130.160:5000/vote
-        ports:
-        - containerPort: 80
+        image: 13.63.130.160:5000/worker:latest
         env:
         - name: REDIS_HOST
-          value: redis
+          value: redis.voting-app.svc.cluster.local
         - name: DB_HOST
-          value: db
+          value: db.voting-app.svc.cluster.local
+        - name: DB_PORT
+          value: "5432"

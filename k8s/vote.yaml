@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: vote
+  name: vote-blue
   namespace: voting-app
 spec:
   replicas: 2
@@ -17,23 +17,10 @@ spec:
     spec:
       containers:
       - name: vote
-        image: 13.63.130.160:5000/vote
+        image: 13.63.130.160:5000/vote:latest
         ports:
         - containerPort: 80
         env:
         - name: REDIS_HOST
-          value: redis
+          value: redis.voting-app.svc.cluster.local
 
-______________________________________________
-
-apiVersion: v1
-kind: Service
-metadata:
-  name: vote
-  namespace: voting-app
-spec:
-  selector:
-    app: vote
-    version: blue
-  ports:
-   - port: 80
