@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: result
-        image: 13.63.160.38:5000/vote
+        image: 13.63.130.160:5000/vote
         ports:
         - containerPort: 80
         env:
