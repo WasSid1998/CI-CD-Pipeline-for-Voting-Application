@@ -29,6 +29,30 @@ Copies Kubernetes manifests to K3s server
 Applies them using kubectl
 App becomes live via NodePort
 
+Architecture Overview
+                ┌────────────────────────┐
+                │   GitHub Repository    │
+                └─────────┬──────────────┘
+                          │
+                          ▼
+                ┌────────────────────────┐
+                │ Jenkins EC2 (Docker)   │
+                │ - Jenkins in container │
+                │ - Docker installed     │
+                │ - K3s CLI installed    │
+                └─────────┬──────────────┘
+                          │
+          Build & Push    ▼
+                ┌────────────────────────┐
+                │ Docker Registry EC2    │
+                │ (Private Registry)     │
+                └─────────┬──────────────┘
+                          │
+          Deploy via SSH  ▼
+                ┌────────────────────────┐
+                │ K3s Cluster EC2        │
+                │ Kubernetes Deployment  │
+                └────────────────────────┘
                            
 ⚙️ Jenkins EC2 Setup
                            
