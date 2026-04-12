@@ -63,8 +63,8 @@ flowchart LR
     D --> D4
     D --> D5
 
-    D1 --> E[NodePort 30007]
-    D2 --> F[NodePort 30008]
+    D1 --> E[NodePort ]
+    D2 --> F[NodePort ]
 
     E --> G[User Access]
     F --> G
