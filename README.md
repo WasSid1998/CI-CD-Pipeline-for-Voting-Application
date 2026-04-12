@@ -34,22 +34,22 @@ App becomes live via NodePort
 
 ```mermaid
 flowchart LR
-    A[GitHub Repository] -->|Code Push| B[Jenkins EC2]
+    A[GitHub Repository] --> B[Jenkins EC2]
 
-    subgraph Jenkins Server
-        B1[Jenkins (Docker Container)]
-        B2[Docker Engine (Host)]
+    subgraph Jenkins_Server
+        B1[Jenkins Docker Container]
+        B2[Docker Engine Host]
         B3[K3s CLI Installed]
         B1 --> B2
     end
 
-    B -->|Build Images| B1
-    B1 -->|Docker Build| B2
-    B2 -->|Push Images| C[Private Docker Registry EC2]
+    B --> B1
 
-    B1 -->|SSH + SCP Deploy| D[K3s Kubernetes EC2]
+    B1 --> C[Docker Registry EC2]
 
-    subgraph K3s Cluster
+    B1 --> D[K3s EC2 Server]
+
+    subgraph K3s_Cluster
         D1[Vote App]
         D2[Result App]
         D3[Worker]
@@ -63,10 +63,11 @@ flowchart LR
     D --> D4
     D --> D5
 
-    D -->|Expose via NodePort| E[User Access]
+    D1 --> E[NodePort 30007]
+    D2 --> F[NodePort 30008]
 
-    E -->|Port 30007| D1
-    E -->|Port 30008| D2
+    E --> G[User Access]
+    F --> G
 ```
 ⚙️ Jenkins EC2 Setup
                            
