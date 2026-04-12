@@ -24,7 +24,12 @@ spec:
         - name: DB_PORT
           value: "5432"
         - name: DB_NAME
-          value: votes
+          value: postgres
+        - name: DB_USER
+          value: postgres
+        - name: DB_PASS
+          value: postgres
+
 ---
 apiVersion: v1
 kind: Service
@@ -37,4 +42,4 @@ spec:
   ports:
     - port: 80
       targetPort: 80
-  type: ClusterIP
+  type: NodePort
