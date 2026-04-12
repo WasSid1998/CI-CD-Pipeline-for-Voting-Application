@@ -22,6 +22,7 @@ All application deployments happen here
 
                            
 🔁 Flow (What Actually Happens)
+
 Jenkins pulls the latest code from GitHub
 Builds Docker images (vote, result, worker)
 Pushes them to private registry
