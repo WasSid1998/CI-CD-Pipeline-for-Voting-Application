@@ -1,0 +1,62 @@
+pipeline {
+    agent any
+
+    stages {
+
+        stage('Clone') {
+            steps {
+                // Clean workspace first to avoid stale files
+                deleteDir()
+                
+                // Force Git to fetch the latest code
+                git branch: 'main',
+                    url: 'https://github.com/WasSid-998/Vote-app-project-new.git',
+                    changelog: true,
+                    poll: true
+            }
+        }
+
+        stage('Build Images') {
+            steps {
+                sh '''
+                docker build -t 13.63.130.160:5000/vote ./vote
+                docker build -t 13.63.130.160:5000/result ./result
+                docker build -t 13.63.130.160:5000/worker ./worker
+                '''
+            }
+        }
+
+        stage('Push Images') {
+            steps {
+                sh '''
+                docker push 13.63.130.160:5000/vote
+                docker push 13.63.130.160:5000/result
+                docker push 13.63.130.160:5000/worker
+                '''
+            }
+        }
+
+       stage('Deploy') {
+    steps {
+        sh '''
+        # Remove old k8s folder on remote
+        ssh -i /var/jenkins_home/k8.pem -o StrictHostKeyChecking=no ubuntu@<k8-Server> "
+            rm -rf ~/k8s
+        "
+
+        # Copy the new k8s folder
+        scp -i /var/jenkins_home/k8.pem -o StrictHostKeyChecking=no -r k8s ubuntu@<k8-Server>:~
+
+        # Apply Kubernetes manifests
+        ssh -i /var/jenkins_home/k8.pem -o StrictHostKeyChecking=no ubuntu@<k8-Server> "
+            # Ensure namespace exists
+            sudo kubectl get namespace voting-app >/dev/null 2>&1 || sudo kubectl create namespace voting-app
+
+            # Apply manifests in the voting-app namespace
+            sudo kubectl apply -f ~/k8s/ -n voting-app
+        "
+        '''
+    }
+}
+    }
+}
