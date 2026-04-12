@@ -30,6 +30,9 @@ Applies them using kubectl
 App becomes live via NodePort
 
 Architecture Overview
+              ## 🏗️ Architecture Overview
+
+```
                 ┌────────────────────────┐
                 │   GitHub Repository    │
                 └─────────┬──────────────┘
@@ -53,7 +56,7 @@ Architecture Overview
                 │ K3s Cluster EC2        │
                 │ Kubernetes Deployment  │
                 └────────────────────────┘
-                           
+```
 ⚙️ Jenkins EC2 Setup
                            
 Install Docker
