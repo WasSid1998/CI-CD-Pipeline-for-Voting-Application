@@ -171,7 +171,7 @@ pipeline {
         stage('Clone') {
             steps {
                 deleteDir()
-                git branch: 'main', url: 'https://github.com/WasSid-998/Vote-app-project-new.git'
+                git branch: 'main', url: '[https://github.com/WasSid-998/Vote-app-project-new.git](https://github.com/WasSid1998/CI-CD-Pipeline-for-Voting-Application.git)'
             }
         }
 
